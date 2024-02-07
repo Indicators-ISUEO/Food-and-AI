@@ -34,5 +34,6 @@ jobs:
       run: |
         git config --global user.name 'karthik-H'
         git config --global user.email 'karthikh@iastate.edu'
+        git add .
         git commit -am "Automated data extraction"
         git push
