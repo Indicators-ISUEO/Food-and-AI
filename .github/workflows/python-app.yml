@@ -30,3 +30,9 @@ jobs:
     - name: Run Script
       run: |
         python HyveeSpider.py
+    - name: Push changes
+      run: |
+        git config --global user.name 'karthik-H'
+        git config --global user.email 'karthikh@iastate.edu'
+        git commit -am "Automated data extraction"
+        git push
