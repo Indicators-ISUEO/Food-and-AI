@@ -8,47 +8,40 @@ class DataCleaner():
     def LoadDataSet(self, inputIndex, url):
         self.productIndex = inputIndex
         if self.productIndex == 0:
-            self.Data = {'Product Type': None,
+            self.Data = {'Product': None,
                          'Current Price': None,
                          'Orignal Price': None,
                          'Weight in lbs': None,
                          'True Weight': None,
                          'Brand': None,
-                         'Address': None,
                          'State': None, 
                          'City': None, 
-                         'Zip Code': None, 
-                         'Date Collected': str(datetime(datetime.today().year, datetime.today().month, datetime.today().day))[:-9], 
-                         'Url': url
+                         'Zip Code': None,
+                         'Source': None
                         }
         elif self.productIndex == 1:
-            self.Data = {'Product Type': None,
-                         'Current Price': None,
-                         'Orignal Price': None,
-                         'Amount in dz': None,
-                         'True Amount': None,
-                         'Brand': None,
-                         'Address': None,
-                         'State': None, 
-                         'City': None, 
-                         'Zip Code': None, 
-                         'Date Collected': str(datetime(datetime.today().year, datetime.today().month, datetime.today().day))[:-9], 
-                         'Url': url
-                        }
-        elif self.productIndex == 2 or self.productIndex == 3:
-            self.Data = {'Product Type': None,
+            self.Data = {'Product': None,
                          'Current Price': None,
                          'Orignal Price': None,
                          'Weight in lbs': None,
                          'True Weight': None,
-                         'Organic': None,
                          'Brand': None,
-                         'Address': None,
                          'State': None, 
                          'City': None, 
-                         'Zip Code': None, 
-                         'Date Collected': str(datetime(datetime.today().year, datetime.today().month, datetime.today().day))[:-9], 
-                         'Url': url
+                         'Zip Code': None,
+                         'Source': None
+                        }
+        elif self.productIndex == 2 or self.productIndex == 3:
+            self.Data = {'Product': None,
+                         'Current Price': None,
+                         'Orignal Price': None,
+                         'Weight in lbs': None,
+                         'True Weight': None,
+                         'Brand': None,
+                         'State': None, 
+                         'City': None, 
+                         'Zip Code': None,
+                         'Source': None
                         }
         else:
             raise DataCleanerError(inputIndex)

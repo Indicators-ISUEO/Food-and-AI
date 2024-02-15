@@ -5,6 +5,7 @@ from DSPG_SeleniumSpider import SeleniumSpider #Important to look at since it pr
 from DSPG_Cleaner import DataCleaner # This is to handle the cleaning of data
 from DSPG_Products import Products #Imports the products to be processed
 from DSPG_SpiderErrors import DataFormatingError #Very Important
+import pandas as pd
 
 # Using Products class. We only need to add the xpaths and urls since thats 
 # all that really changes from spider to spider
@@ -139,8 +140,8 @@ class ProductsLoader():
         
         self.Products[0].append(BaconUrls)
         self.Products[1].append(EggUrls)
-        self.Products[2].append(HeirloomTomatoesUrls)
-        self.Products[3].append(TomatoesUrls)
+        # self.Products[2].append(HeirloomTomatoesUrls)
+        # self.Products[3].append(TomatoesUrls)
 
     #This handles the xpaths by adding to the Products class
     #most websites have simular xpaths for each item. You might need to make differnet xpaths for each item 
@@ -181,9 +182,10 @@ class DataFormater():
         if input[3] == None:
             input = self.swap_elements(input, 2, 3)
         #Common inputs
-        self.Clean.Data['Product Type'] = input[0]
+        self.Clean.Data['Product'] = input[0]
         self.Clean.Data['Current Price'] = input[1]
         self.Clean.Data['Orignal Price'] = input[2]
+        self.Clean.Data['Source'] = 'Hyvee'
         if(inputIndex == 0): #Bacon
             self.Clean.Data['True Weight'] = input[3]
             self.Clean.baconModifications()
@@ -197,7 +199,8 @@ class DataFormater():
             raise DataFormatingError(inputIndex)
         # self.setLocationalData()
         self.Clean.cleanPricing()
-        return list(self.Clean.Data.values())
+        return self.Clean.Data
+        # return list(self.Clean.Data.values())
         
     def swap_elements(self, input, idx1, idx2):
         # Make a copy of the input list to avoid modifying it
@@ -237,16 +240,17 @@ class HyveeSpider(SeleniumSpider):
             totalRecoveries += self.requestExtraction(product)
         self.log("Exporting files")
         #Dataframes to CSV files
-        for df, product in zip(self.dataFrames, load.Products):
-            self.saveDataFrame(df, self.currentDate + self.name + " " + product[1] + ".csv")
+        # for df, product in zip(self.dataFrames, load.Products):
+        #     self.saveDataFrame(df, self.currentDate + self.name + " " + product[1] + ".csv")
         self.debug('\n < --- Total runtime took %s seconds with %d recoveries --- >' % (time.time() - self.runTime, totalRecoveries))
-        if len(self.skipped) != 0:
-            self.debug('\n < -!- WARNING SKIPPED (' + str(len(self.skipped)) + ') DATA FOUND --->')
-        self.Logs_to_file(self.currentDate + self.name + ' Spider Logs.txt')
+        # if len(self.skipped) != 0:
+        #     self.debug('\n < -!- WARNING SKIPPED (' + str(len(self.skipped)) + ') DATA FOUND --->')
+        # self.Logs_to_file(self.currentDate + self.name + ' Spider Logs.txt')
         if len(self.skipped) > 0:
             self.debug(self.skipped)
             self.skipHandler()      
         self.driver.quit()
+        return self.dataFrames
 
     #This handles the reqests for each url and adds the data to the dataframe
     def handleRequests(self, product):
@@ -287,7 +291,9 @@ class HyveeSpider(SeleniumSpider):
                 if items == None:
                     self.printer("Data Formater not configured to ", product[1])
             self.debug('Extracted: ', items)
-            self.dataFrames[product[0]].loc[len(self.dataFrames[product[0]])] = items                    
+            self.dataFrames = pd.concat([self.dataFrames, pd.DataFrame(items, index=[0])], ignore_index=True)
+            # self.dataFrames.append(pd.DataFrame(items, index=[0]), ignore_index=True)
+            # self.dataFrames[product[0]].loc[len(self.dataFrames[product[0]])] = items                    
             self.count += 1
             self.printer(product[1] + " item added ", self.count, " of ", total, ":  ", items)
 
@@ -337,16 +343,3 @@ class HyveeSpider(SeleniumSpider):
                 self.debug("Item still missing attempting other skipped for now") 
         self.debug('\n < --- Total runtime with all repairs took %s seconds --- >' % (time.time() - self.runTime))
         self.Logs_to_file(self.currentDate + self.name + ' spider COMPLETED REPAIR Logs.txt')
-
-
-spider = HyveeSpider()
-spider.LOGGER = True
-spider.DEBUGGER = True
-
-#To run the spider
-spider.start_requests()
-
-#DEBUG Switch
-if(spider.DEBUGGER):
-    [print(dataFrame) for dataFrame in spider.dataFrames]
-    spider.printLogs()
