@@ -1,0 +1,5 @@
+.DS_Store
+.food/
+.foodAI/
+__pycache__/
+.gitignore
