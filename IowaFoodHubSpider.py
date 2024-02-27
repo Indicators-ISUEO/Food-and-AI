@@ -74,10 +74,10 @@ class IowaFoodHubSpider(scrapy.Spider):
         clean.Data['Weight in lbs'] = clean.ozToLb(clean.Data['True Weight'])
         clean.cleanPricing()
         clean = self.setLocationalData(clean)
-        Clean.Data['Source'] = 'Iowa Food Hub'
+        clean.Data['Source'] = 'Iowa Food Hub'
         #Adding product to data frame   
         indexFrame = response.meta.get('DataFrameIndex')
-        self.dataFrames = pd.concat([self.dataFrames, pd.DataFrame(items, index=[0])], ignore_index=True)
+        self.DataFrame = pd.concat([self.DataFrame, pd.DataFrame(clean.Data, index=[0])], ignore_index=True)
         # self.DataFrame[indexFrame].loc[len(self.DataFrame[indexFrame])] = list(clean.Data.values())
                 
     def iowaFoodHubEggs(self, response):
@@ -90,7 +90,7 @@ class IowaFoodHubSpider(scrapy.Spider):
         #load cleaner template
         clean = DataCleaner()
         clean.LoadDataSet(1, response.url)
-        clean.Data['Product Type'] = name
+        clean.Data['Product'] = name
         
         #The other areas we are interested in
         venderXpath = '//*[@id="ProductSection-product-template"]//*[contains(@class, "product-single__vendor") and @itemprop="brand"]/text()'
@@ -113,8 +113,9 @@ class IowaFoodHubSpider(scrapy.Spider):
         clean = self.setLocationalData(clean)   
         #Adding product to data frame
         indexFrame = response.meta.get('DataFrameIndex')
-        self.dataFrames = pd.concat([self.dataFrames, pd.DataFrame(items, index=[0])], ignore_index=True)
+        self.DataFrame = pd.concat([self.DataFrame, pd.DataFrame(clean.Data, index=[0])], ignore_index=True)
         # self.DataFrame[indexFrame].loc[len(self.DataFrame[indexFrame])] = list(clean.Data.values())
+        test = ""
         
     def dataFrameItemIndex(self, string):
         for item in self.product.ProductList:

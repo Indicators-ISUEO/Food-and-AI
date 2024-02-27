@@ -93,7 +93,7 @@ class DataCleaner():
     #This Determines if a list talking about weights in ounces or pounds.
     def findWeight(self):
         #Checking these places for clues
-        checkLocations = [self.Data['Current Price'], self.Data['Product Type'], self.Data['Orignal Price']]
+        checkLocations = [self.Data['Current Price'], self.Data['Product'], self.Data['Orignal Price']]
         possible = []
         for string in checkLocations:
             if string == None: 
@@ -153,8 +153,8 @@ class DataCleaner():
     def tomatoesModifications(self, weight):
         #We can extract Organic from the name
         if self.Data['Organic'] == None:
-            name = self.Data['Product Type'].lower().replace(' ', '')
-            nameSpace = self.Data['Product Type'].lower() + " "
+            name = self.Data['Product'].lower().replace(' ', '')
+            nameSpace = self.Data['Product'].lower() + " "
             if 'organic' in name:
                 self.Data['Organic'] = True
             if ' og ' in nameSpace:
@@ -237,7 +237,7 @@ class DataCleaner():
     #Eggs don't have weight so we use amount
     def eggModifications(self):
         if self.Data['True Amount'] == None:
-            checkLocations = [self.Data['Product Type'], self.Data['Current Price'], self.Data['Orignal Price']]
+            checkLocations = [self.Data['Product'], self.Data['Current Price'], self.Data['Orignal Price']]
             for string in checkLocations:
                 if(self.EggFinder(string)):
                     return
