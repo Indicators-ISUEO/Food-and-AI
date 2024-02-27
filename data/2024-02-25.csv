@@ -2,7 +2,7 @@ Product,Current Price,Orignal Price,Weight in lbs,True Weight,Brand,Producer,Sta
 Hormel Black Label Thick Cut Bacon,8.39,8.39,1.0,16 oz Packet,,,,,,Hyvee,,
 Hormel Black Label Fully Cooked Original Thick Cut Bacon,4.79,4.99,0.1575,2.52 oz,,,,,,Hyvee,,
 Applegate Naturals Uncured Sunday Bacon Hickory Smoked,7.39,7.39,0.5,8 oz,,,,,,Hyvee,,
-Hy-Vee Double Smoked Thick Sliced Bacon,4.09,4.99,1.0,16 oz,,,,,,Hyvee,,
+Hy-Vee Double Smoked Thick Sliced Bacon,4.79,4.99,1.0,16 oz,,,,,,Hyvee,,
 Applegate Naturals No Sugar Uncured Bacon Hickory Smoked,7.39,7.39,0.5,8 oz,,,,,,Hyvee,,
 Hy-Vee Sweet Smoked Bacon,4.09,4.99,1.0,16 oz Package,,,,,,Hyvee,,
 Hormel Black Label Original Bacon,8.39,8.39,1.0,16 oz Pack,,,,,,Hyvee,,
@@ -23,7 +23,7 @@ Country Smokehouse Thick Hickory Smoked Slab Bacon,5.49,8.99,1.0,1 lb,,,,,,Hyvee
 Hickory Country Bacon,4.19,6.49,1.0,16 oz,,,,,,Hyvee,,
 Hy-Vee Hickory House Applewood Naturally Smoked Thick Sliced Bacon,8.39,8.39,1.5,24 oz Package,,,,,,Hyvee,,
 Hy-Vee Sweet Smoked Thick Sliced Bacon,4.09,4.99,1.0,16 oz,,,,,,Hyvee,,
-Hy-Vee Fully Cooked Hickory Smoked Bacon,4.09,4.99,0.1575,2.52 oz,,,,,,Hyvee,,
+Hy-Vee Fully Cooked Hickory Smoked Bacon,4.19,4.99,0.1575,2.52 oz,,,,,,Hyvee,,
 Hormel Black Label Applewood Thick Cut Bacon,8.39,8.39,0.75,12 oz Tray,,,,,,Hyvee,,
 Farmland Naturally Applewood Smoked Classic Cut Bacon,3.98,7.79,1.0,16 oz,,,,,,Hyvee,,
 Farmland Naturally Hickory Smoked Thick Cut Bacon Package,12.59,12.59,1.5,24 oz Zip Pak,,,,,,Hyvee,,
@@ -53,15 +53,15 @@ Hormel Natural ChoiceOriginal Thick Cut Uncured Bacon,12.59,12.59,1.25,20 oz Pac
 Farmland Naturally Hickory Smoked Double Smoked Classic Cut Bacon,3.98,7.79,1.0,16 oz,,,,,,Hyvee,,
 Des Moines Bacon & Meat Company Hardwood Smoked Uncured Country Bacon,6.29,7.49,0.75,12 oz Package,,,,,,Hyvee,,
 Hormel Black Label Jalapeno Thick Cut Bacon,8.39,8.39,0.75,12 oz Tray,,,,,,Hyvee,,
-"Oscar Mayer Bacon, Applewood, Thick Cut",6.98,6.98,1.0,16 oz,,,,,,Hyvee,,
+Oscar Mayer Naturally Hardwood Smoked Thick Cut Applewood Bacon,6.98,6.98,1.0,16 oz,,,,,,Hyvee,,
 Des Moines Bacon & Meat Company Applewood Smoked Bacon,6.29,7.49,0.75,12 oz Package,,,,,,Hyvee,,
 Oscar Mayer Natural Fully Cooked Uncured Bacon,7.89,7.89,0.1575,2.52 oz,,,,,,Hyvee,,
-Hy-Vee Grade A Large Eggs,4.19,4.19,,,,,,,,Hyvee,12 ct,1.0
-Hy-Vee Grade A Large Eggs,6.29,6.29,,,,,,,,Hyvee,18 ct,1.5
+Hy-Vee Grade A Large Eggs,4.59,4.59,,,,,,,,Hyvee,12 ct,1.0
+Hy-Vee Grade A Large Eggs,6.79,6.79,,,,,,,,Hyvee,18 ct,1.5
 Farmers Hen House Free Range Organic Large Brown Grade A Eggs,6.29,6.29,,,,,,,,Hyvee,12 ct Carton,1.0
-That's Smart! Large Shell Eggs,3.29,3.29,,,,,,,,Hyvee,12 ct,1.0
+That's Smart! Large Shell Eggs,3.19,3.19,,,,,,,,Hyvee,12 ct,1.0
 Farmers Hen House Free Range Grade A Large Brown Eggs,2.68,4.99,,,,,,,,Hyvee,12 ct Carton,1.0
-Hy-Vee Grade A Extra Large Eggs,6.79,6.79,,,,,,,,Hyvee,18 ct Carton,1.5
+Hy-Vee Grade A Extra Large Eggs,6.89,6.89,,,,,,,,Hyvee,18 ct Carton,1.5
 Egglands Best Farm Fresh Grade A Large Eggs,6.29,6.29,,,,,,,,Hyvee,18 ct,1.5
 Eggland's Best Grade A Large Eggs,4.19,4.19,,,,,,,,Hyvee,12 ct,1.0
 Hy-Vee Free Range Large Brown Egg Grade A,4.19,4.19,,,,,,,,Hyvee,12 ct,1.0
@@ -84,5 +84,3 @@ Eggland's Best Organic Cage Free Grade A Large Brown Eggs,7.19,7.19,,,,,,,,Hyvee
 Nellie's Free Range Eggs Large Fresh Brown Grade A,6.29,6.29,,,,,,,,Hyvee,12 ct,1.0
 Hy-Vee Grade A Large Eggs,2.59,2.59,,,,,,,,Hyvee,6 ct,0.5
 Farmers Hen House Organic Large Brown Eggs,3.69,3.69,,,,,,,,Hyvee,6 ct,0.5
-Hormel Black Label Thick Cut Bacon,8.39,8.39,1.0,16 oz Packet,,,,,,Hyvee,,
-Hy-Vee Grade A Large Eggs,4.19,4.19,,,,,,,,Hyvee,12 ct,1.0
