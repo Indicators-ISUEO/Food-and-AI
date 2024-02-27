@@ -7,6 +7,7 @@ cffi==1.16.0
 charset-normalizer==3.3.2
 comm==0.2.1
 constantly==23.10.4
+crochet==2.1.1
 cryptography==42.0.2
 cssselect==1.2.0
 debugpy==1.8.1
@@ -76,5 +77,6 @@ urllib3==2.2.0
 w3lib==2.1.2
 wcwidth==0.2.13
 webdriver-manager==4.0.1
+wrapt==1.16.0
 wsproto==1.2.0
 zope.interface==6.1
