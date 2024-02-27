@@ -22,7 +22,7 @@ import sys
 import multiprocessing
 import os
 
-# setup()
+setup()
 
 def scrapeHyvee():
     def _scrapeHyvee(source):
