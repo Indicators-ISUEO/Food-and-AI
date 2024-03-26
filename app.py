@@ -14,7 +14,7 @@ import logging
 import sys
 import requests
 import os
-
+import traceback
 
 def scrapeHyvee():
     def _scrapeHyvee(source):
@@ -29,7 +29,7 @@ def scrapeHyvee():
                         value['data'] = data
                     observer.on_next(value)
                 except:
-                    logging.error(sys.exc_info())
+                    print(sys.exc_info())
                     observer.on_error(value)
 
             return source.subscribe(
@@ -59,7 +59,7 @@ def scrapeRussMarket():
                                  value['data'] = spider.dataFrames
                     observer.on_next(value)
                 except:
-                    logging.error(sys.exc_info())
+                    print(sys.exc_info())
                     observer.on_error(value)
 
             return source.subscribe(
@@ -89,7 +89,7 @@ def scrapeGateway():
                                 value['data'] = spider.dataFrames
                     observer.on_next(value)
                 except:
-                    logging.error(sys.exc_info())
+                    print(sys.exc_info())
                     observer.on_error(value)
 
             return source.subscribe(
@@ -137,7 +137,7 @@ def uploadData():
                         value['data'].to_csv(os.path.join(filePath), index=False)
                     observer.on_next(value)
                 except:
-                    logging.error(sys.exc_info())
+                    print(sys.exc_info())
                     observer.on_error(value)
 
             return source.subscribe(
@@ -174,7 +174,7 @@ def getVendorData(item, vendorList):
                 if 'region' in address:
                     region = address['region']
                     if region == 'IA':
-                        item['localToIowa'] = True
+                        localToIowa = True
                 if 'locality' in address:
                     locality = address['locality']
                 if 'address1' in address:
@@ -191,5 +191,5 @@ source.pipe(
     # scrapeGateway(),
     uploadData()
 ).subscribe(on_next = lambda e: print("on Next: {0}".format(e)),
-    on_error = lambda e: logging.error("Error Occurred: {0}".format(sys.exc_info())),
+    on_error = lambda e: logging.error("Error Occurred: {0}".format(traceback.print_exc(file=sys.stdout))),
     on_completed = lambda: logging.info("Done!"))

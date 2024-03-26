@@ -28,7 +28,7 @@ class ProductsLoader():
     def urlsAdder(self):
         products = ["carrots", "green onions", "potatoes", "organic spinach", "fresh spinach", "lettuce", "tomato", "strawberries",
                     "raspberries", "mushrooms", "egg large", "egg medium", "chicken whole", "beef steak", "beef whole", "pork bacon"]
-        # products = ["carrots"]
+        # products = ["carrots", "green onions", "potatoes"]
         links = []
         for product in products: 
             response = requests.get("https://api.freshop.com/1/products?app_key=russ_market&limit=24&q={0}&relevance_sort=asc&sort=relevance&store_id=6158".format(product))
