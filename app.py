@@ -186,9 +186,9 @@ def getVendorData(item, vendorList):
 
 source = of({'store': "Hyvee", 'data': []}, {'store': "RUSS"}, {'store': "Gateway"})
 source.pipe(
-    # scrapeHyvee(),
-    # scrapeRussMarket(),
-    scrapeGateway(),
+    scrapeHyvee(),
+    scrapeRussMarket(),
+    # scrapeGateway(),
     uploadData()
 ).subscribe(on_next = lambda e: print("on Next: {0}".format(e)),
     on_error = lambda e: logging.error("Error Occurred: {0}".format(sys.exc_info())),
