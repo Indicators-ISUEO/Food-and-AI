@@ -73,7 +73,7 @@ class SeleniumSpider():
         # WARNING: High number longer time but less chance of a skip or fails when extraction 
         self.attempts = 3           #The number of attempts the spider can retry if an error occurs.    Recommended range 2 - 50
         self.waitTime = 10          #The number of seconds WebDriver will wait for the page to load.    Recommended range 5 - 30
-        self.maxRetryCount = 50     #Number of retrys the javascript can make.                          Recommended range 10 - 100
+        self.maxRetryCount = 25     #Number of retrys the javascript can make.                          Recommended range 10 - 100
         
         #Formating the dates recoreded
         self.currentDate = str(datetime(datetime.today().year, datetime.today().month, datetime.today().day))[:-8]

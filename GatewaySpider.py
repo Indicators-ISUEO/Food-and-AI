@@ -6,6 +6,7 @@ from DSPG_Cleaner import DataCleaner # This is to handle the cleaning of data
 from DSPG_Products import Products #Imports the products to be processed
 from DSPG_SpiderErrors import DataFormatingError #Very Important
 import pandas as pd
+import requests
 
 # Using Products class. We only need to add the xpaths and urls since thats 
 # all that really changes from spider to spider
@@ -23,61 +24,28 @@ class ProductsLoader():
 
     #Adding Urls to products
     def urlsAdder(self):
-        BaconUrls = [
-                     'https://gatewaymarket.storebyweb.com/s/1000-1/i/INV-1000-18483'
-                    #  'https://gatewaymarket.storebyweb.com/s/1000-1/i/INV-1000-18485',
-                    #  'https://gatewaymarket.storebyweb.com/s/1000-1/i/INV-1000-24190',
-                    #  'https://gatewaymarket.storebyweb.com/s/1000-1/i/INV-1000-18553',
-                    #  'https://gatewaymarket.storebyweb.com/s/1000-1/i/INV-1000-33732',
-                    #  'https://gatewaymarket.storebyweb.com/s/1000-1/i/INV-1000-18521',
-                    #  'https://gatewaymarket.storebyweb.com/s/1000-1/i/INV-1000-18548',
-                    #  'https://gatewaymarket.storebyweb.com/s/1000-1/i/INV-1000-18469',
-                    #  'https://gatewaymarket.storebyweb.com/s/1000-1/i/INV-1000-33734',
-                    #  'https://gatewaymarket.storebyweb.com/s/1000-1/i/INV-1000-33736',
-                    #  'https://gatewaymarket.storebyweb.com/s/1000-1/i/INV-1000-33731',
-                    #  'https://gatewaymarket.storebyweb.com/s/1000-1/i/INV-1000-29349',
-                    #  'https://gatewaymarket.storebyweb.com/s/1000-1/i/INV-1000-18524'
-                    ]
-        EggUrls = [
-                #    'https://gatewaymarket.storebyweb.com/s/1000-1/i/INV-1000-22775',
-                #    'https://gatewaymarket.storebyweb.com/s/1000-1/i/INV-1000-22776',
-                #    'https://gatewaymarket.storebyweb.com/s/1000-1/i/INV-1000-12603'
-                  ]
-        HeirloomTomatoesUrls = [
-                                # 'https://gatewaymarket.storebyweb.com/s/1000-1/i/INV-1000-11820',
-                                # 'https://gatewaymarket.storebyweb.com/s/1000-1/i/INV-1000-22455',
-                                # 'https://gatewaymarket.storebyweb.com/s/1000-1/i/INV-1000-11896',
-                                # 'https://gatewaymarket.storebyweb.com/s/1000-1/i/INV-1000-11973',
-                                # 'https://gatewaymarket.storebyweb.com/s/1000-1/i/INV-1000-22343'
-                               ]
-        TomatoesUrls = [
-                        # 'https://gatewaymarket.storebyweb.com/s/1000-1/i/INV-1000-28349',
-                        # 'https://gatewaymarket.storebyweb.com/s/1000-1/i/INV-1000-22501',
-                        # 'https://gatewaymarket.storebyweb.com/s/1000-1/i/INV-1000-11861',
-                        # 'https://gatewaymarket.storebyweb.com/s/1000-1/i/INV-1000-26358',
-                        # 'https://gatewaymarket.storebyweb.com/s/1000-1/i/INV-1000-22515',
-                        # 'https://gatewaymarket.storebyweb.com/s/1000-1/i/INV-1000-22617',
-                        # 'https://gatewaymarket.storebyweb.com/s/1000-1/i/INV-1000-11820',
-                        # 'https://gatewaymarket.storebyweb.com/s/1000-1/i/INV-1000-11756',
-                        # 'https://gatewaymarket.storebyweb.com/s/1000-1/i/INV-1000-22341',
-                        # 'https://gatewaymarket.storebyweb.com/s/1000-1/i/INV-1000-22343',
-                        # 'https://gatewaymarket.storebyweb.com/s/1000-1/i/INV-1000-28492',
-                        # 'https://gatewaymarket.storebyweb.com/s/1000-1/i/INV-1000-29803',
-                        # 'https://gatewaymarket.storebyweb.com/s/1000-1/i/INV-1000-11787',
-                        # 'https://gatewaymarket.storebyweb.com/s/1000-1/i/INV-1000-35543',
-                        # 'https://gatewaymarket.storebyweb.com/s/1000-1/i/INV-1000-11972',
-                        # 'https://gatewaymarket.storebyweb.com/s/1000-1/i/INV-1000-11973',
-                        # 'https://gatewaymarket.storebyweb.com/s/1000-1/i/INV-1000-11975',
-                        # 'https://gatewaymarket.storebyweb.com/s/1000-1/i/INV-1000-12014',
-                        # 'https://gatewaymarket.storebyweb.com/s/1000-1/i/INV-1000-43100',
-                        # 'https://gatewaymarket.storebyweb.com/s/1000-1/i/INV-1000-35365',
-                        # 'https://gatewaymarket.storebyweb.com/s/1000-1/i/INV-1000-35542'
-                       ]
-        self.Products[0].append(BaconUrls)
-        self.Products[1].append(EggUrls)
-        self.Products[2].append(HeirloomTomatoesUrls)
-        self.Products[3].append(TomatoesUrls)
-        
+        links = []
+        # products = ["Carrots", "green onions", "potatoes", "organic spinach", "fresh spinach", "lettuce", "tomato", "strawberries",
+        #             "raspberries", "mushrooms", "egg large", "egg medium", "chicken whole", "beef steak", "beef whole", "pork bacon"]
+        products = ["carrots"]
+        for product in products:
+            data = {
+                "q": "bacon",
+                "facets": {},
+                "pn": 1,
+                "ps": 10,
+                "s": "",
+                "g": []
+            }
+            response = requests.post("https://gatewaymarket.storebyweb.com/s/1000-1/api/b/", json=data)
+            if response.status_code == 200:
+                resData = response.json()
+                if 'items' in resData:
+                    for item in resData['items']:
+                        name = item['name'].lower()
+                        if 'bacon' in name:
+                            links.append("https://gatewaymarket.storebyweb.com/s/{0}/i/{1}".format(item['departmentId'], item['id']))
+        self.Products[0].append(links)       
         
 
     #This handles the xpaths by adding to the Products class
@@ -182,8 +150,6 @@ class GatewaySpider(SeleniumSpider):
             totalRecoveries += self.requestExtraction(product)
         self.log("Exporting files")
         #Dataframes to CSV files
-        # for df, product in zip(self.dataFrames, load.Products):
-            # self.saveDataFrame(df, self.currentDate + self.name + " " + product[1] + ".csv")
         self.debug('\n < --- Total runtime took %s seconds with %d recoveries --- >' % (time.time() - self.runTime, totalRecoveries))
         if len(self.skipped) != 0:
             self.debug('\n < -!- WARNING SKIPPED (' + str(len(self.skipped)) + ') DATA FOUND --->')

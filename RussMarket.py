@@ -7,6 +7,8 @@ from DSPG_Cleaner import DataCleaner # This is to handle the cleaning of data
 from DSPG_Products import Products #Imports the products to be processed
 from DSPG_SpiderErrors import DataFormatingError #Very Important
 import pandas as pd
+import requests
+from bs4 import BeautifulSoup
 
 # Using Products class. We only need to add the xpaths and urls since thats 
 # all that really changes from spider to spider
@@ -24,76 +26,22 @@ class ProductsLoader():
 
     #Adding Urls to products
     def urlsAdder(self):
-        BaconUrls = [
-                     'https://www.russmarket.com/shop/meat/bacon/sliced/hormel_black_label_thick_cut_bacon_1_lb/p/229335'
-                    #  'https://www.russmarket.com/shop/meat/bacon/sliced/hormel_black_label_original_bacon_16_ounce/p/2349369',
-                    #  'https://www.russmarket.com/shop/meat/bacon/mullan_road_bacon/p/5220311',
-                    #  'https://www.russmarket.com/shop/meat/bacon/prairie_fresh_signature_applewood_smoked_bacon_pork_loin_filet_27_2_oz/p/6828650',
-                    #  'https://www.russmarket.com/shop/meat/bacon/farmland_bacon_thick_cut_naturally_hickory_smoked/p/571658',
-                    #  'https://www.russmarket.com/shop/meat/bacon/sliced_slab_bacon/p/1564405684712590572',
-                    #  'https://www.russmarket.com/shop/meat/bacon/sliced/smithfield_naturally_hickory_smoked_hometown_original_bacon/p/3142755',
-                    #  'https://www.russmarket.com/shop/meat/bacon/sliced/jamestown_economy_sliced_bacon_16_oz/p/180026',
-                    #  'https://www.russmarket.com/shop/meat/bacon/sliced/smithfield_naturally_hickory_smoked_thick_cut_bacon_12_oz_pack/p/3142757',
-                    #  'https://www.russmarket.com/shop/meat/bacon/sliced/smithfield_bacon_thick_cut_12_oz/p/2101085',
-                    #  'https://www.russmarket.com/shop/meat/bacon/sliced/farmland_naturally_hickory_smoked_classic_cut_bacon_16_oz/p/2376191',
-                    #  'https://www.russmarket.com/shop/meat/bacon/sliced/farmland_naturally_hickory_smoked_thick_cut_bacon_16_oz/p/95721',
-                    #  'https://www.russmarket.com/shop/meat/bacon/sliced/farmland_naturally_applewood_smoked_bacon_16_oz/p/585815',
-                    #  'https://www.russmarket.com/shop/meat/bacon/sliced/hormel_black_label_microwave_ready_bacon/p/26151',
-                    #  'https://www.russmarket.com/shop/meat/bacon/sliced/oscar_mayer_original_bacon_16_oz/p/32303',
-                    #  'https://www.russmarket.com/shop/meat/bacon/sliced/big_buy_hardwood_smoked_bacon/p/2101073',
-                    #  'https://www.russmarket.com/shop/meat/bacon/turkey/oscar_mayer_turkey_bacon_original_12_oz/p/39809',
-                    #  'https://www.russmarket.com/shop/meat/bacon/sliced/farmland_bacon_low_sodium_hickory_smoked_16_oz/p/2376192',
-                    #  'https://www.russmarket.com/shop/meat/bacon/canadian/farmland_bacon_double_smoked_double_thick_cut_12_oz/p/1564405684713224952',
-                    #  'https://www.russmarket.com/shop/meat/bacon/canadian/hormel_black_label_naturally_hardwood_smoked_97_fat_free_canadian_bacon_6_oz_zip_pak/p/26168',
-                    #  'https://www.russmarket.com/shop/meat/bacon/sliced/oscar_mayer_bacon_original_8_oz/p/32302',
-                    ]
+        products = ["carrots", "green onions", "potatoes", "organic spinach", "fresh spinach", "lettuce", "tomato", "strawberries",
+                    "raspberries", "mushrooms", "egg large", "egg medium", "chicken whole", "beef steak", "beef whole", "pork bacon"]
+        # products = ["carrots"]
+        links = []
+        for product in products: 
+            response = requests.get("https://api.freshop.com/1/products?app_key=russ_market&limit=24&q={0}&relevance_sort=asc&sort=relevance&store_id=6158".format(product))
+            if response.status_code == 200:
+                data = response.json()
+                if 'items' in data:
+                    for item in data['items']:
+                        link_url = item['canonical_url']
+                        if product in link_url:
+                            links.append(link_url)
 
-        EggUrls = [
-                #    'https://www.russmarket.com/shop/dairy/eggs/everyday/best_choice_grade_a_large_eggs/p/3139172'
-                #    'https://www.russmarket.com/shop/dairy/eggs/everyday/best_choice_large_eggs/p/3139176',
-                #    'https://www.russmarket.com/shop/dairy/eggs/everyday/best_choice_jumbo_eggs/p/3139173',
-                #    'https://www.russmarket.com/shop/dairy/eggs/everyday/best_choice_extra_large_eggs/p/3139174',
-                #    'https://www.russmarket.com/shop/dairy/eggs/everyday/best_choice_large_eggs/p/3139192',
-                #    'https://www.russmarket.com/shop/dairy/eggs/everyday/eggland_s_best_large_eggs_12_ea/p/54283',
-                #    'https://www.russmarket.com/shop/dairy/eggs/everyday/eggland_s_best_large_eggs_18_ea/p/54279'
-                  ]
-
-        HeirloomTomatoesUrls = [
-                                # 'https://www.russmarket.com/shop/produce/fresh_vegetables/tomatoes/heirloom_tomatoes/p/12412'
-                               ]
-
-        TomatoesUrls = [
-                        # 'https://www.russmarket.com/shop/produce/fresh_vegetables/tomatoes/roma_tomatoes/p/12447#!/?department_id=22508184'
-                        # 'https://www.russmarket.com/shop/produce/fresh_vegetables/tomatoes/tomatoes_on_the_vine/p/2311660#!/?department_id=22508184',
-                        # 'https://www.russmarket.com/shop/produce/fresh_vegetables/tomatoes/tomatoes_grape/p/1564405684709718017#!/?department_id=22508184',
-                        # 'https://www.russmarket.com/shop/produce/fresh_vegetables/tomatoes/nature_sweet_cherubs_heavenly_salad_tomatoes_10_oz/p/1564405684704878585#!/?department_id=22508184',
-                        # 'https://www.russmarket.com/shop/produce/fresh_vegetables/tomatoes/on_vine_cherry_tomatoes/p/645688#!/?department_id=22508184',
-                        # 'https://www.russmarket.com/shop/produce/fresh_vegetables/tomatoes/org_cherry_tomatoes/p/151480#!/?department_id=22508184',
-                        # 'https://www.russmarket.com/shop/produce/fresh_vegetables/tomatoes/red_sun_farms_sweet_pops_tomatoes_10_oz/p/1564405684704089139#!/?department_id=22508184',
-                        # 'https://www.russmarket.com/shop/produce/fresh_vegetables/tomatoes/nature_sweet_tomatoes_fresh_ingredient_10_oz/p/1564405684704878584#!/?department_id=22508184',
-                        # 'https://www.russmarket.com/shop/produce/fresh_vegetables/tomatoes/naturesweet_constellation_tomatoes/p/1564405684705657728#!/?department_id=22508184',
-                        # 'https://www.russmarket.com/shop/produce/fresh_vegetables/tomatoes/regular_red_tomato_large/p/12409#!/?department_id=22508184',
-                        # 'https://www.russmarket.com/shop/produce/fresh_vegetables/tomatoes/tomato_on_the_vine_organic/p/2313397#!/?department_id=22508184',
-                        # 'https://www.russmarket.com/shop/produce/fresh_vegetables/tomatoes/beefsteak_tomato/p/111605#!/?department_id=22508184',
-                        # 'https://www.russmarket.com/shop/produce/fresh_vegetables/tomatoes/red_cocktail_intermediate_tomatoes/p/78471#!/?department_id=22508184',
-                        # 'https://www.russmarket.com/shop/produce/fresh_vegetables/tomatoes/yellow_tomatoes/p/2311723#!/?department_id=22508184',
-                        # 'https://www.russmarket.com/shop/produce/fresh_vegetables/tomatoes/nature_sweet_cherry_tomatoes_on_the_vine_d_vines/p/1564405684704300013#!/?department_id=22508184',
-                        # 'https://www.russmarket.com/shop/produce/fresh_vegetables/tomatoes/tomatoes_hot_house/p/12571#!/?department_id=22508184',
-                        # 'https://www.russmarket.com/shop/produce/fresh_vegetables/tomatoes/organic_grape_tomatoes/p/6830116#!/?department_id=22508184',
-                        # 'https://www.russmarket.com/shop/produce/fresh_vegetables/tomatoes/signature_brand_organics_grape_tomatoes_organic/p/23476#!/?department_id=22508184',
-                        # 'https://www.russmarket.com/shop/produce/fresh_vegetables/tomatoes/real_grape_tomatoes/p/2456990#!/?department_id=22508184',
-                        # 'https://www.russmarket.com/shop/produce/fresh_vegetables/tomatoes/organic_grape_tomatoes/p/8036367#!/?department_id=22508184',
-                        # 'https://www.russmarket.com/shop/produce/fresh_vegetables/tomatoes/sweet_pops_red_chry_snacking_tomato/p/1564405684705309980#!/?department_id=22508184',
-                        # 'https://www.russmarket.com/shop/produce/fresh_vegetables/tomatoes/redsun_tomatoes_cocktail/p/645689#!/?department_id=22508184',
-                        # 'https://www.russmarket.com/shop/produce/fresh_vegetables/tomatoes/heirloom_tomatoes/p/12412#!/?department_id=22508184',
-                        # 'https://www.russmarket.com/shop/produce/fresh_vegetables/heritage_tomatoes/p/1564405684712593332#!/?department_id=22508184',
-                        # 'https://www.russmarket.com/shop/produce/fresh_vegetables/tomatoes/tomatillos/p/12573#!/?department_id=22508184'
-                       ]
         
-        self.Products[0].append(BaconUrls)
-        self.Products[1].append(EggUrls)
-        self.Products[2].append(HeirloomTomatoesUrls)
-        self.Products[3].append(TomatoesUrls)
+        self.Products[0].append(links)
 
     #This handles the xpaths by adding to the Products class
     #most websites have simular xpaths for each item. You might need to make differnet xpaths for each item 
